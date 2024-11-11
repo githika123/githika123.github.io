@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Social Media Comparison</title>
+  <title>Social Media Usage Control</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    /* General Styling */
+    /* Basic Styling */
     body {
       font-family: Arial, sans-serif;
       display: flex;
@@ -47,11 +47,38 @@
       max-width: 600px;
       margin-top: 40px;
     }
+
+    /* Control Form Styling */
+    .control-form {
+      width: 80%;
+      max-width: 600px;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .control-form input[type="number"] {
+      width: 60px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+
+    .control-form button {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
 
-  <h1>Comparison of Social Media Platforms</h1>
+  <h1>Social Media Usage Control</h1>
   
   <!-- Comparison Table -->
   <table class="comparison-table">
@@ -102,8 +129,35 @@
     <canvas id="timeSpentChart"></canvas>
   </div>
 
+  <!-- Control Form -->
+  <div class="control-form">
+    <h2>Set Daily Time Limit (Minutes)</h2>
+    <form id="timeLimitForm">
+      <label for="facebookTime">Facebook:</label>
+      <input type="number" id="facebookTime" value="60">
+      
+      <label for="instagramTime">Instagram:</label>
+      <input type="number" id="instagramTime" value="45">
+      
+      <label for="twitterTime">Twitter:</label>
+      <input type="number" id="twitterTime" value="30">
+      
+      <label for="linkedinTime">LinkedIn:</label>
+      <input type="number" id="linkedinTime" value="20">
+      
+      <label for="snapchatTime">Snapchat:</label>
+      <input type="number" id="snapchatTime" value="25">
+      
+      <label for="tiktokTime">TikTok:</label>
+      <input type="number" id="tiktokTime" value="50">
+      
+      <button type="button" onclick="setTimeLimits()">Set Limits</button>
+    </form>
+    <p id="remainingTimeMessage"></p>
+  </div>
+
   <script>
-    // Chart.js Pie Chart
+    // Chart.js Pie Chart for Time Spent on Social Media
     const ctx = document.getElementById('timeSpentChart').getContext('2d');
     const timeSpentChart = new Chart(ctx, {
       type: 'pie',
@@ -111,14 +165,9 @@
         labels: ['Facebook', 'Instagram', 'Twitter', 'LinkedIn', 'Snapchat', 'TikTok'],
         datasets: [{
           label: 'Time Spent (%)',
-          data: [25, 20, 15, 10, 10, 20], // Sample percentage data for each platform
+          data: [25, 20, 15, 10, 10, 20],
           backgroundColor: [
-            '#3b5998', // Facebook
-            '#e4405f', // Instagram
-            '#1da1f2', // Twitter
-            '#0077b5', // LinkedIn
-            '#fffc00', // Snapchat
-            '#69c9d0'  // TikTok
+            '#3b5998', '#e4405f', '#1da1f2', '#0077b5', '#fffc00', '#69c9d0'
           ],
           hoverOffset: 5
         }]
@@ -126,19 +175,38 @@
       options: {
         responsive: true,
         plugins: {
-          legend: {
-            position: 'top',
-          },
+          legend: { position: 'top' },
           tooltip: {
             callbacks: {
-              label: function(tooltipItem) {
-                return tooltipItem.label + ': ' + tooltipItem.raw + '%';
-              }
+              label: tooltipItem => `${tooltipItem.label}: ${tooltipItem.raw}%`
             }
           }
         }
       }
     });
+
+    // Time limit controls
+    const timeLimits = {
+      Facebook: 60,
+      Instagram: 45,
+      Twitter: 30,
+      LinkedIn: 20,
+      Snapchat: 25,
+      TikTok: 50
+    };
+
+    function setTimeLimits() {
+      timeLimits.Facebook = parseInt(document.getElementById('facebookTime').value);
+      timeLimits.Instagram = parseInt(document.getElementById('instagramTime').value);
+      timeLimits.Twitter = parseInt(document.getElementById('twitterTime').value);
+      timeLimits.LinkedIn = parseInt(document.getElementById('linkedinTime').value);
+      timeLimits.Snapchat = parseInt(document.getElementById('snapchatTime').value);
+      timeLimits.TikTok = parseInt(document.getElementById('tiktokTime').value);
+
+      const totalTime = Object.values(timeLimits).reduce((acc, time) => acc + time, 0);
+      document.getElementById('remainingTimeMessage').innerText = 
+        `Total time limit across platforms: ${totalTime} minutes per day.`;
+    }
   </script>
 
 </body>
