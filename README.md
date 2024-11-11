@@ -61,7 +61,7 @@
   <main>
     <section id="about">
       <h2>About Me</h2>
-      <p>Hello! I'm learning how to create a website from scratch.</p>
+      <p>Hello! I'm creating a yin yang website.</p>
     </section>
     <section id="contact">
       <h2>Contact</h2>
