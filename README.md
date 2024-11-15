@@ -211,27 +211,157 @@
     </div>
 
     <script>
-        // Registration functionality
         document.getElementById("registration-form").addEventListener("submit", function(e) {
             e.preventDefault();
             alert("Registration successful! Please log in.");
             document.getElementById("registration-section").style.display = "none";
             document.getElementById("login-section").style.display = "block";
         });
-
-        // Login functionality
         document.getElementById("login-link").addEventListener("click", function() {
             document.getElementById("registration-section").style.display = "none";
             document.getElementById("login-section").style.display = "block";
         });
-
-        document.getElementById("login-form").addEventListener("submit", function(e) {
+         document.getElementById("login-form").addEventListener("submit", function(e) {
             e.preventDefault();
             document.getElementById("login-section").style.display = "none";
             document.getElementById("symptoms-section").style.display = "block";
         });
-
-        // Symptom Check functionality
         document.getElementById("check-symptoms-button").addEventListener("click", function() {
             const symptoms = [];
             document.query
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Describe Your Symptoms</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group textarea, .form-group input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .symptom-checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .symptom-checkboxes label {
+            width: 45%;
+        }
+        .form-group button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        .hidden {
+            display: none;
+        }
+        .result-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .result-section p {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Describe Your Symptoms</h1>
+        <!-- User Input: Describe Symptoms -->
+        <div class="form-group">
+            <label for="user-symptoms">Describe your symptoms:</label>
+            <textarea id="user-symptoms" placeholder="Type your symptoms here..." rows="5"></textarea>
+        </div>
+
+        <!-- Predefined Symptom Checkboxes -->
+        <div class="form-group">
+            <label>Check any symptoms you are experiencing:</label>
+            <div class="symptom-checkboxes">
+                <label><input type="checkbox" class="symptom" value="fever"> Fever</label>
+                <label><input type="checkbox" class="symptom" value="headache"> Headache</label>
+                <label><input type="checkbox" class="symptom" value="cough"> Cough</label>
+                <label><input type="checkbox" class="symptom" value="fatigue"> Fatigue</label>
+                <label><input type="checkbox" class="symptom" value="sore throat"> Sore Throat</label>
+                <label><input type="checkbox" class="symptom" value="running nose"> Running Nose</label>
+            </div>
+        </div>
+
+        <!-- Button to Check Symptoms -->
+        <div class="form-group">
+            <button id="check-symptoms-button">Check Symptoms</button>
+        </div>
+
+        <!-- Diagnosis Section (Hidden initially) -->
+        <div class="result-section hidden" id="result-section">
+            <h2>Diagnosis</h2>
+            <p id="diagnosis-result"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("check-symptoms-button").addEventListener("click", function() {
+            const userSymptoms = document.getElementById("user-symptoms").value.trim();
+            const selectedSymptoms = [];
+            
+            // Get selected symptoms from checkboxes
+            const checkboxes = document.querySelectorAll(".symptom:checked");
+            checkboxes.forEach(function(checkbox) {
+                selectedSymptoms.push(checkbox.value);
+            });
+
+            // Show result based on the symptoms
+            let resultText = "You mentioned the following symptoms:\n";
+            if (userSymptoms) {
+                resultText += `User input: ${userSymptoms}\n`;
+            }
+
+            if (selectedSymptoms.length > 0) {
+                resultText += `Selected symptoms: ${selectedSymptoms.join(", ")}`;
+            } else {
+                resultText += "No symptoms selected.";
+            }
+
+            // Update diagnosis result
+            document.getElementById("diagnosis-result").innerText = resultText;
+            
+            // Display the result section
+            document.getElementById("result-section").classList.remove("hidden");
+        });
+    </script>
+</body>
+</html>
+
